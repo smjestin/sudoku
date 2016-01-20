@@ -23,18 +23,18 @@ class ViewController: UIViewController {
     
     var gameBoard: [String] = ["5", "3", "", "", "7", "", "", "", "", "6", "", "", "1", "9", "5", "", "", "", "", "9", "8", "", "", "", "", "6", "", "8", "", "", "", "6", "", "", "", "3", "4", "", "", "8", "", "3", "", "", "1", "7", "", "", "", "2", "", "", "", "6", "", "6", "", "", "", "", "2", "8", "", "", "", "", "4", "1", "9", "", "", "5", "", "", "", "", "8", "", "", "7", "9"]
     
-    
+    // SET UP GAMEBOARD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         width = CGFloat((Double(screenSize.width) / 9) - 10)
         height = CGFloat((Double(screenSize.height) / 9) - 10)
-        for var y = 0; y < 9; y++ {
+        for var y = 0; y < 9; y++ {                     // create 9x9 grid
             for var x = 0; x < 9; x++ {
-                var horizontal = CGFloat(Double(screenSize.width - 20) * 0.11 * Double(x))
-                var vertical = CGFloat(Double(screenSize.width - 20) * 0.11 * Double(y))
-                if x == 1 || x == 2 || x == 4 || x == 5 || x == 7 || x == 8  {
+                var horizontal = CGFloat(Double(screenSize.width - 20) * 0.11 * Double(x))  //calculate height of squares
+                var vertical = CGFloat(Double(screenSize.width - 20) * 0.11 * Double(y))    //calculate width of squares
+                if x == 1 || x == 2 || x == 4 || x == 5 || x == 7 || x == 8  {              //align squares in sudoku grid
                     horizontal = horizontal - 4
                     if x == 2 || x == 5 || x == 8 {
                         horizontal = horizontal - 4
@@ -63,20 +63,21 @@ class ViewController: UIViewController {
         }
     }
     
+    // WHEN START BUTTON IS CLICKED
     @IBAction func startGame(sender: AnyObject) {
-        if sender.currentTitle!! == "Start" {
-            for var i = 0; i < 81; i++ {
+        if sender.currentTitle!! == "Start" {       //if user hasn't started game
+            for var i = 0; i < 81; i++ {            //set gameboard
                 grid[i + 1].text = gameBoard[i]
                 if(gameBoard[i] != "") {
                     grid[i + 1].font = UIFont(name: "HelveticaNeue-Bold", size: min(height, width))
-                    grid[i + 1].enabled = false
+                    grid[i + 1].enabled = false     //disabled gameboard values
                 }
                 else {
                     grid[i + 1].enabled = true
                 }
             }
             sender.setTitle("Reset", forState: .Normal)
-            if !time.valid {
+            if !time.valid {                        //start timer
                 let aSelector : Selector = "updateTime"
                 time = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector,     userInfo: nil, repeats: true)
                 startTime = NSDate.timeIntervalSinceReferenceDate()
@@ -93,11 +94,12 @@ class ViewController: UIViewController {
         }
     }
     
+    // WHEN USER INPUTS VALUE
     func gameMove(sender: UITextField!) {
         let index = grid.indexOf(sender)
-        let column = index! % 9
+        let column = index! % 9             //calculate row of input
         var row = 0
-        if(column != 0) {
+        if(column != 0) {                   //calculate column of input
             row = Int(index! / 9) + 1
         }
         else {
@@ -131,7 +133,7 @@ class ViewController: UIViewController {
                 i = 81
             }
         }
-        if !good {
+        if !good {                          //prevent user if input is invalid
             sender.text = ""
             let alertView = UIAlertView()
             alertView.addButtonWithTitle("Okay")
@@ -141,7 +143,7 @@ class ViewController: UIViewController {
             
         }
         
-        if done {
+        if done {                           //alert user if game is done
             let alertView = UIAlertView()
             alertView.addButtonWithTitle("Okay")
             alertView.title = "YAYYYYYYY"

@@ -9,23 +9,30 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    /* UI ELEMENTS */
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var sudokuView: UIView!
     @IBOutlet weak var timer: UILabel!
     var grid = [UITextField()]
+    
+    /* GAMEBOARD ELEMENTS */
     var height: CGFloat = 0.0
     var width: CGFloat = 0.0
+    var gameboard = GameBoard.init()
+    
+    /* */
+    var completeRows = [Bool](count: 9, repeatedValue: false)
+    var completeColumns = [Bool](count: 9, repeatedValue: false)
+    
+    /* TIMER ELEMENTS */
     var startTime = NSTimeInterval()
     var time = NSTimer()
-    
-    //var gameBoard: [String] = ["4", "", "", "", "3", "", "", "", "", "", "", "", "6", "", "", "8", "", "", "", "", "", "", "", "", "", "", "1", "", "", "", "", "5", "", "", "9", "", "", "8", "", "", "", "", "6", "", "", "", "7", "", "2", "", "", "", "", "", "", "", "", "1", "", "2", "7", "", "", "5", "", "3", "", "", "", "", "4", "", "9", "", "", "", "", "", "", "", ""]
-    
-    var gameBoard: [String] = ["5", "3", "", "", "7", "", "", "", "", "6", "", "", "1", "9", "5", "", "", "", "", "9", "8", "", "", "", "", "6", "", "8", "", "", "", "6", "", "", "", "3", "4", "", "", "8", "", "3", "", "", "1", "7", "", "", "", "2", "", "", "", "6", "", "6", "", "", "", "", "2", "8", "", "", "", "", "4", "1", "9", "", "", "5", "", "", "", "", "8", "", "", "7", "9"]
-    
+
     // SET UP GAMEBOARD
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         width = CGFloat((Double(screenSize.width) / 9) - 10)
@@ -65,27 +72,27 @@ class ViewController: UIViewController {
     
     // WHEN START BUTTON IS CLICKED
     @IBAction func startGame(sender: AnyObject) {
-        if sender.currentTitle!! == "Start" {       //if user hasn't started game
+        resetTimer()    // start timer over
+        if sender.currentTitle!! == "Start" || sender.currentTitle!! == "New"{       // if user hasn't started game
+            let random = Int(arc4random_uniform(1465) + 1)                          // randomly select game
+            gameboard.setBoard(random)
+            let board = gameboard.getBoard()
+            
             for var i = 0; i < 81; i++ {            //set gameboard
-                grid[i + 1].text = gameBoard[i]
-                if(gameBoard[i] != "") {
+                if(board[i] != "nil") {
+                    grid[i + 1].text = board[i]
                     grid[i + 1].font = UIFont(name: "HelveticaNeue-Bold", size: min(height, width))
                     grid[i + 1].enabled = false     //disabled gameboard values
                 }
                 else {
-                    grid[i + 1].enabled = true
+                    grid[i+1].text = ""
+                    grid[i + 1].enabled = true      // rest of values are enabled
                 }
             }
             sender.setTitle("Reset", forState: .Normal)
-            if !time.valid {                        //start timer
-                let aSelector : Selector = "updateTime"
-                time = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector,     userInfo: nil, repeats: true)
-                startTime = NSDate.timeIntervalSinceReferenceDate()
-            }
         }
-        else if sender.currentTitle!! == "Reset" {
-            sender.setTitle("Start", forState: .Normal)
-            
+        else if sender.currentTitle!! == "Reset" {  //if reset, reset the board
+            sender.setTitle("New", forState: .Normal)
             for var i = 1; i < 81; i++ {
                 if grid[i].enabled {
                     grid[i].text = ""
@@ -97,63 +104,153 @@ class ViewController: UIViewController {
     // WHEN USER INPUTS VALUE
     func gameMove(sender: UITextField!) {
         let index = grid.indexOf(sender)
+        gameboard.updateBoard(index!, value: sender.text!)
+        
         let column = index! % 9             //calculate row of input
         var row = 0
-        if(column != 0) {                   //calculate column of input
-            row = Int(index! / 9) + 1
-        }
-        else {
-            row = Int(index! / 9)
-        }
-        var good = true
+        if(column != 0) { row = Int(index! / 9) + 1  }           //calculate column of input
+        else { row = Int(index! / 9) }
+        
+        var valid = true
         var done = true
         
-        //check row for values
-        for var i = (row - 1) * 9 + 1; i <= (row - 1) * 9 + 8; i++ {
-            if grid[i].text! == sender.text && i != index! && sender.text != "" {
-                print(grid[i].text! + ", " + String(row) + ", " + String(i) + ", " + String(Int((i / 10) + 1)))
-                good = false
-            }
-        }
+        valid = validateBox(row, column: column, index: index!, value: sender.text!) && validateRow(row, index: index!, value: sender.text!) && validateColumn(column, index: index!, value: sender.text!)
         
-        //check column for values
-        for var i = column; i < 81; i += 9 {
-            if grid[i].text! == sender.text && i != index! && sender.text != "" {
-                print(grid[i].text! + ", " +  String(i) + ", " + String(Int(i % 9)))
-                good = false
-            }
-        }
-        
-        //check box for values
-        
-        
+        // check if finished
         for var i = 1; i < 81; i++ {
             if grid[i].text! == "" {
                 done = false
                 i = 81
             }
         }
-        if !good {                          //prevent user if input is invalid
+        
+        if done {
+            done = validateDone()
+        }
+        
+        if !valid {                          //prevent user if input is invalid
+            alert("Invalid Move", message: "That value cannot be placed here.")
             sender.text = ""
-            let alertView = UIAlertView()
-            alertView.addButtonWithTitle("Okay")
-            alertView.title = "Invalid Move"
-            alertView.message = "That value cannot be placed here."
-            alertView.show()
-            
         }
         
         if done {                           //alert user if game is done
-            let alertView = UIAlertView()
-            alertView.addButtonWithTitle("Okay")
-            alertView.title = "YAYYYYYYY"
-            alertView.message = "Boom. Nailed it."
-            alertView.show()
+            alert("Congratulations", message: "You successfully completed this puzzle.")
             time.invalidate()
         }
+        
+        if !validateValue(sender.text!) {
+            alert("Invalid Value", message: "Input value must be a number from 1-9.")
+            sender.text = ""
+        }
     }
-
-    func updateTime() {
+    
+    func validateBox(row: Int, column: Int, index: Int, value: String) -> Bool {
+        var startPoint = 0
+        var valid = true;
+        
+        if column == 1 || column == 4 || column == 7 {
+            startPoint = index
+        }
+        else if column == 2 || column == 5 || column == 8 {
+            startPoint = index - 1
+        }
+        else if column == 3 || column == 6 || column == 0 {
+            startPoint = index - 2
+        }
+        
+        if row == 2 || row == 5 || row == 8 {
+            startPoint = startPoint - 9
+        }
+        else if row == 3 || row == 6 || row == 9 {
+            startPoint = startPoint - 18
+        }
+        
+        var counter = 0;
+        for var i = startPoint; i <= startPoint + 21; i++ {
+            counter++;
+            if gameboard.getBoard()[i] == value && i != index && value != "" {
+                print("Incorrect box: " + String(i) + " " + grid[i].text!)
+                valid = false
+            }
+            
+            if counter == 3 {
+                i = i + 6
+                counter = 0
+            }
+        }
+        return valid
+    }
+    
+    func validateRow(row: Int, index: Int, value: String) -> Bool {
+        var valid = true
+        var counter = 0
+        for var i = (row - 1) * 9 + 1; i <= (row - 1) * 9 + 9; i++ {
+            if grid[i].text! == value && i != index && value != "" {
+                print("Incorrect row: " + String(i))
+                valid = false
+            }
+            if grid[i].text! != "" {
+                counter = counter + Int(grid[i].text!)!
+            }
+        }
+        if counter == 45 {
+            completeRows[row] = true
+        }
+        return valid
+    }
+    
+    func validateColumn(column: Int, index: Int, value: String) -> Bool {
+        var valid = true
+        var counter = 0
+        for var i = column; i < 81; i += 9 {
+            if grid[i].text! == value && i != index && value != "" {
+                print("Incorrect column: " + String(i))
+                valid = false
+            }
+            if grid[i].text! != "" {
+                counter = counter + Int(grid[i].text!)!
+            }
+        }
+        if counter == 45 {
+            completeColumns[column] = true
+        }
+        return valid
+    }
+    
+    func validateValue(value: String) -> Bool {
+        var valid = true
+        if value != "" && value != "1" && value != "2" && value != "3" && value != "4" && value != "5" && value != "6" && value != "7" && value != "8" && value != "9" {
+            valid = false
+        }
+        return valid
+    }
+    
+    
+    func validateDone() -> Bool {
+        var valid = true
+        for var i = 0; i < 9; i++ {
+            if completeRows[i] == false {
+                valid = false
+                return valid
+            }
+        }
+        for var i = 0; i < 9; i++ {
+            if completeColumns[i] == false {
+                valid = false
+                return valid
+            }
+        }
+        return valid
+    }
+        
+    func alert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func updateTimer() {
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         var elapsedTime: NSTimeInterval = currentTime - startTime
@@ -171,8 +268,21 @@ class ViewController: UIViewController {
         
     }
     
-    func resetTime() {
-        
+    func startTimer() {
+        if !time.valid {                        //start timer
+            let aSelector : Selector = "updateTimer"
+            time = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector,     userInfo: nil, repeats: true)
+            startTime = NSDate.timeIntervalSinceReferenceDate()
+        }
+    }
+    
+    func stopTimer() {
+        time.invalidate()
+    }
+    
+    func resetTimer() {
+        stopTimer()
+        startTimer()
     }
     
     override func didReceiveMemoryWarning() {

@@ -9,12 +9,32 @@
 import Foundation
 
 class GameBoard {
-    var gameBoard: [String] = ["4", "", "", "", "3", "", "", "", "", "", "", "", "6", "", "", "8", "", "", "", "", "", "", "", "", "", "", "1", "", "", "", "", "5", "", "", "9", "", "", "8", "", "", "", "", "6", "", "", "", "7", "", "2", "", "", "", "", "", "", "", "", "1", "", "2", "7", "", "", "5", "", "3", "", "", "", "", "4", "", "9", "", "", "", "", "", "", "", ""]
-    
+    var board : [String]
     
     init() {
-        
+        board = []
     }
     
+    init(random: Int) {
+        
+        let db = SQLiteDB.sharedInstance()
+        var result = db.query("select * from gameboard where id=?", parameters: [random])
+        
+        board = String(result[0]["gameboard"]!).characters.split {$0 == ","}.map(String.init)
+    }
     
+    func getBoard() -> [String] {
+        return board
+    }
+    
+    func setBoard(random: Int) {
+        let db = SQLiteDB.sharedInstance()
+        var result = db.query("select * from gameboard where id=?", parameters: [random])
+        
+        board = String(result[0]["gameboard"]!).characters.split {$0 == ","}.map(String.init)
+    }
+    
+    func updateBoard(index: Int, value: String) {
+        board[index] = value
+    }
 }

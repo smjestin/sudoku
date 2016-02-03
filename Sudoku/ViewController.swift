@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var height: CGFloat = 0.0
     var width: CGFloat = 0.0
     var gameboard = GameBoard.init()
+    var score = Score.init()
     
     /* */
     var completeRows = [Bool](count: 9, repeatedValue: false)
@@ -102,10 +103,8 @@ class ViewController: UIViewController {
     }
     
     // WHEN USER INPUTS VALUE
-    func gameMove(sender: UITextField!) {
+    @IBAction func gameMove(sender: UITextField!) {
         let index = grid.indexOf(sender)
-        gameboard.updateBoard(index!, value: sender.text!)
-        
         let column = index! % 9             //calculate row of input
         var row = 0
         if(column != 0) { row = Int(index! / 9) + 1  }           //calculate column of input
@@ -117,16 +116,17 @@ class ViewController: UIViewController {
         valid = validateBox(row, column: column, index: index!, value: sender.text!) && validateRow(row, index: index!, value: sender.text!) && validateColumn(column, index: index!, value: sender.text!)
         
         // check if finished
-        for var i = 1; i < 81; i++ {
+        for var i = 1; i < 82; i++ {
             if grid[i].text! == "" {
                 done = false
                 i = 81
             }
         }
-        
-        if done {
+                
+        /*if done {
             done = validateDone()
-        }
+        }*/
+        
         
         if !valid {                          //prevent user if input is invalid
             alert("Invalid Move", message: "That value cannot be placed here.")
@@ -134,8 +134,12 @@ class ViewController: UIViewController {
         }
         
         if done {                           //alert user if game is done
-            alert("Congratulations", message: "You successfully completed this puzzle.")
+            let highScores = score.getHighScores()
+            print("Here!")
+            alert("Congratulations", message: "You successfully completed this puzzle. \nHigh scores: \n" + String(highScores))
             time.invalidate()
+            score.insertScore(timer.text!)
+            
         }
         
         if !validateValue(sender.text!) {
@@ -168,7 +172,7 @@ class ViewController: UIViewController {
         var counter = 0;
         for var i = startPoint; i <= startPoint + 21; i++ {
             counter++;
-            if gameboard.getBoard()[i] == value && i != index && value != "" {
+            if grid[i].text! == value && i != index && value != "" {
                 print("Incorrect box: " + String(i) + " " + grid[i].text!)
                 valid = false
             }
@@ -194,7 +198,7 @@ class ViewController: UIViewController {
             }
         }
         if counter == 45 {
-            completeRows[row] = true
+            completeRows[row % 9] = true
         }
         return valid
     }

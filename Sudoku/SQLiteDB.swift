@@ -69,7 +69,7 @@ class SQLiteDB {
 			}
 		}
 		let path = (docDir as NSString).stringByAppendingPathComponent(dbName)
-		//print("Database path: \(path)")
+		print("Database path: \(path)")
 		// Check if copy of DB is there in Documents directory
 		if !(fm.fileExistsAtPath(path)) {
 			// The database does not exist, so copy to Documents directory

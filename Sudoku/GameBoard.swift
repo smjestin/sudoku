@@ -33,8 +33,4 @@ class GameBoard {
         
         board = String(result[0]["gameboard"]!).characters.split {$0 == ","}.map(String.init)
     }
-    
-    func updateBoard(index: Int, value: String) {
-        board[index] = value
-    }
 }

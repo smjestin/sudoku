@@ -12,6 +12,7 @@
 		F3715E211C55AD02005F145B /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3715E201C55AD02005F145B /* SQLTable.swift */; };
 		F379F5D21C557CB500A1581B /* gameboard.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F379F5D11C55669100A1581B /* gameboard.sqlite */; };
 		F379F5D51C55823800A1581B /* Sudoku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F379F5D31C55823800A1581B /* Sudoku.xcdatamodeld */; };
+		F3A698E71C6031FD00B1ED61 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A698E61C6031FD00B1ED61 /* Score.swift */; };
 		F3C68AB01C4B0CFC00765C26 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C68AAF1C4B0CFC00765C26 /* GameBoard.swift */; };
 		F3DCAF1E1C4936A100886EBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCAF1D1C4936A100886EBC /* AppDelegate.swift */; };
 		F3DCAF201C4936A100886EBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCAF1F1C4936A100886EBC /* ViewController.swift */; };
@@ -47,6 +48,7 @@
 		F3715E201C55AD02005F145B /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		F379F5D11C55669100A1581B /* gameboard.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = gameboard.sqlite; sourceTree = "<group>"; };
 		F379F5D41C55823800A1581B /* Sudoku.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sudoku.xcdatamodel; sourceTree = "<group>"; };
+		F3A698E61C6031FD00B1ED61 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		F3C68AAF1C4B0CFC00765C26 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		F3DCAF1A1C4936A100886EBC /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3DCAF1D1C4936A100886EBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				F3F7CC5F1C55859D00C5D17F /* String-Extras.swift */,
 				F3DCAF1D1C4936A100886EBC /* AppDelegate.swift */,
 				F3DCAF1F1C4936A100886EBC /* ViewController.swift */,
+				F3A698E61C6031FD00B1ED61 /* Score.swift */,
 				F3C68AAF1C4B0CFC00765C26 /* GameBoard.swift */,
 				F3DCAF211C4936A100886EBC /* Main.storyboard */,
 				F3DCAF271C4936A100886EBC /* Assets.xcassets */,
@@ -290,6 +293,7 @@
 			files = (
 				F3C68AB01C4B0CFC00765C26 /* GameBoard.swift in Sources */,
 				F3715E211C55AD02005F145B /* SQLTable.swift in Sources */,
+				F3A698E71C6031FD00B1ED61 /* Score.swift in Sources */,
 				F3F7CC611C55859D00C5D17F /* String-Extras.swift in Sources */,
 				F3DCAF201C4936A100886EBC /* ViewController.swift in Sources */,
 				F3F7CC601C55859D00C5D17F /* SQLiteDB.swift in Sources */,

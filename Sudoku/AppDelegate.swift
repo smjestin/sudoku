@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("gameboard.sqlite")
         
         if !NSFileManager.defaultManager().fileExistsAtPath(url.path!) {
-            var preloadURL: NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("gameboard", ofType: "sqlite")!)
+            var preloadURL: NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("gameboard", ofType: "sqlite")!)    // preload gameboard.sqlite if not currrently bundled
             var error:NSError? = nil
             do {
                 try NSFileManager.defaultManager().copyItemAtURL(preloadURL, toURL: url)

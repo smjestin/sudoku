@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         width = CGFloat((Double(screenSize.width) / 9) - 10)
         height = CGFloat((Double(screenSize.height) / 9) - 10)
+
         for var y = 0; y < 9; y++ {                     // create 9x9 grid
             for var x = 0; x < 9; x++ {
                 //calculate horizontal placement of element
@@ -85,9 +86,9 @@ class ViewController: UIViewController {
     }
     
     // WHEN START BUTTON IS CLICKED
-    @IBAction func startGame(sender: AnyObject) {
+    @IBAction func startGame(sender: UIButton!) {
         resetTimer()    // start timer over
-        if sender.currentTitle!! == "Start" || sender.currentTitle!! == "New"{       // if user hasn't started game
+        if sender.currentTitle! == "Start" || sender.currentTitle! == "New"{       // if user hasn't started game
             let random = Int(arc4random_uniform(1465) + 1)                           // randomly select game
             gameboard.setBoard(random)
             let board = gameboard.getBoard()
@@ -104,7 +105,7 @@ class ViewController: UIViewController {
             }
             sender.setTitle("Reset", forState: .Normal)
         }
-        else if sender.currentTitle!! == "Reset" {  //if reset, reset the board
+        else if sender.currentTitle! == "Reset" {  //if reset, reset the board
             sender.setTitle("New", forState: .Normal)
             for var i = 1; i < 81; i++ {
                 if grid[i].enabled {
@@ -144,6 +145,7 @@ class ViewController: UIViewController {
             }
             message = message + "\n\nHigh scores: \n" + String(highScores)
             alert("Congratulations", message: message)
+            startButton.setTitle("New", forState: .Normal)   // allow user to start new game, instead of reset
         }
         
         if !validateValue(sender.text!) {             // ensure that the input is valid

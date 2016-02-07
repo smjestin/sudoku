@@ -24,6 +24,13 @@
 		F3DCAF361C4936A100886EBC /* SudokuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCAF351C4936A100886EBC /* SudokuTests.swift */; };
 		F3DCAF411C4936A100886EBC /* SudokuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCAF401C4936A100886EBC /* SudokuUITests.swift */; };
 		F3F7CC601C55859D00C5D17F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F7CC5E1C55859D00C5D17F /* SQLiteDB.swift */; };
+		F3FE8B1D1C66BFB500665652 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B191C66BFB500665652 /* appIcon58x58.png */; };
+		F3FE8B1E1C66BFB500665652 /* appIcon87x87.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B1A1C66BFB500665652 /* appIcon87x87.png */; };
+		F3FE8B1F1C66BFB500665652 /* appIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B1B1C66BFB500665652 /* appIcon120x120.png */; };
+		F3FE8B201C66BFB500665652 /* appIcon180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B1C1C66BFB500665652 /* appIcon180x180.png */; };
+		F3FE8B221C66C04000665652 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B211C66C04000665652 /* appIcon80x80.png */; };
+		F3FE8B251C66C0BE00665652 /* appIcon76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B231C66C0BE00665652 /* appIcon76x76.png */; };
+		F3FE8B261C66C0BE00665652 /* appIcon83x83.png in Resources */ = {isa = PBXBuildFile; fileRef = F3FE8B241C66C0BE00665652 /* appIcon83x83.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +75,13 @@
 		F3DCAF421C4936A100886EBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3F7CC5D1C55859D00C5D17F /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F3F7CC5E1C55859D00C5D17F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
+		F3FE8B191C66BFB500665652 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
+		F3FE8B1A1C66BFB500665652 /* appIcon87x87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon87x87.png; sourceTree = "<group>"; };
+		F3FE8B1B1C66BFB500665652 /* appIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon120x120.png; sourceTree = "<group>"; };
+		F3FE8B1C1C66BFB500665652 /* appIcon180x180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon180x180.png; sourceTree = "<group>"; };
+		F3FE8B211C66C04000665652 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
+		F3FE8B231C66C0BE00665652 /* appIcon76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon76x76.png; sourceTree = "<group>"; };
+		F3FE8B241C66C0BE00665652 /* appIcon83x83.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon83x83.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +114,7 @@
 		F3AC06B71C6573D700FBED21 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F3FE8B181C66BF9B00665652 /* AppIcons */,
 				F3AC06B91C65742400FBED21 /* SQLite */,
 				F3C5E9951C6578AB00A740AD /* winnerSound.mp3 */,
 				F3C5E9971C657FCD00A740AD /* applauseSound.mp3 */,
@@ -173,6 +188,20 @@
 				F3DCAF421C4936A100886EBC /* Info.plist */,
 			);
 			path = SudokuUITests;
+			sourceTree = "<group>";
+		};
+		F3FE8B181C66BF9B00665652 /* AppIcons */ = {
+			isa = PBXGroup;
+			children = (
+				F3FE8B231C66C0BE00665652 /* appIcon76x76.png */,
+				F3FE8B241C66C0BE00665652 /* appIcon83x83.png */,
+				F3FE8B211C66C04000665652 /* appIcon80x80.png */,
+				F3FE8B191C66BFB500665652 /* appIcon58x58.png */,
+				F3FE8B1A1C66BFB500665652 /* appIcon87x87.png */,
+				F3FE8B1B1C66BFB500665652 /* appIcon120x120.png */,
+				F3FE8B1C1C66BFB500665652 /* appIcon180x180.png */,
+			);
+			name = AppIcons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,11 +312,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				F379F5D21C557CB500A1581B /* gameboard.sqlite in Resources */,
+				F3FE8B201C66BFB500665652 /* appIcon180x180.png in Resources */,
 				F3DCAF2B1C4936A100886EBC /* LaunchScreen.storyboard in Resources */,
 				F3C5E9961C6578AB00A740AD /* winnerSound.mp3 in Resources */,
+				F3FE8B221C66C04000665652 /* appIcon80x80.png in Resources */,
+				F3FE8B1E1C66BFB500665652 /* appIcon87x87.png in Resources */,
 				F3DCAF281C4936A100886EBC /* Assets.xcassets in Resources */,
+				F3FE8B251C66C0BE00665652 /* appIcon76x76.png in Resources */,
 				F3DCAF231C4936A100886EBC /* Main.storyboard in Resources */,
 				F3C5E9981C657FCD00A740AD /* applauseSound.mp3 in Resources */,
+				F3FE8B1D1C66BFB500665652 /* appIcon58x58.png in Resources */,
+				F3FE8B261C66C0BE00665652 /* appIcon83x83.png in Resources */,
+				F3FE8B1F1C66BFB500665652 /* appIcon120x120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
